@@ -174,7 +174,7 @@ body {
   text-align: center;
 }
 .proHead {
-  background-image: url(../images/whiteBack2.png);
+  background-image: url(../public/images/whiteBack2.png);
   box-shadow: 10px 10px 54px rgba(70, 62, 21, 0.2);
   height: 25vh;
   width: 100%;

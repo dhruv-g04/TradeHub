@@ -51,7 +51,7 @@ function Heading() {
     return (
         <section id="header">
             {/* <a id="logo" href="/"><h3><img src="images\T logo.png"/> radeHub</h3></a> */}
-            <a id="logo" href="/"><h3><img src="images\TradeHub logo.png"/></h3></a>
+            <a id="logo" href="/"><h3><img src="images/TradeHub logo.png"/></h3></a>
             <div>
                 <ul id="navbar">
 
