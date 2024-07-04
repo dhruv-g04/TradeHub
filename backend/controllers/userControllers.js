@@ -5,32 +5,36 @@ const generateToken = require("../utils/generateToken");
 
 // Register a new user
 const addUser = asyncHandler(async (req, res) => {
-    try {
-        const { name, username, password } = req.body;
+    const { name, username, password } = req.body;
 
+    try {
         // Check if the username already exists
         const userExists = await User.findOne({ username });
         if (userExists) {
             return res.status(409).json({ message: "User Already Exists" });
         }
 
-        // Create a new user
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await User.create({ name, username, password: hashedPassword });
+
+        // Create a new user
+        const newUser = new User({ name, username, password: hashedPassword });
+        const user = await newUser.save();
 
         // Generate token
         const token = generateToken(user._id);
 
         // Set cookie and send response
         res.cookie("jwtoken", token, {
-            expires: new Date(Date.now() + 25892000000), // 1 year
             httpOnly: true,
+            expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year
+            secure: process.env.NODE_ENV === "production", // Ensures cookie is sent only over HTTPS in production
         }).json({
             _id: user._id,
             name: user.name,
             username: user.username,
             message: "Registration successful",
-            token: token,
+            token,
         });
     } catch (error) {
         console.error("Error during registration:", error);
@@ -40,13 +44,13 @@ const addUser = asyncHandler(async (req, res) => {
 
 // Login user
 const authUser = asyncHandler(async (req, res) => {
-    try {
-        const { username, password } = req.body;
+    const { username, password } = req.body;
 
+    try {
         // Find user
         const user = await User.findOne({ username });
         if (!user || !(await bcrypt.compare(password, user.password))) {
-            return res.status(401).json({ error: "Invalid Username or Password" });
+            return res.status(401).json({ message: "Invalid Username or Password" });
         }
 
         // Generate token
@@ -54,13 +58,14 @@ const authUser = asyncHandler(async (req, res) => {
 
         // Set cookie and send response
         res.cookie("jwtoken", token, {
-            expires: new Date(Date.now() + 25892000000), // 1 year
             httpOnly: true,
+            expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year
+            secure: process.env.NODE_ENV === "production", // Ensures cookie is sent only over HTTPS in production
         }).json({
             _id: user._id,
             name: user.name,
             username: user.username,
-            token: token,
+            token,
         });
     } catch (error) {
         console.error("Error during login:", error);

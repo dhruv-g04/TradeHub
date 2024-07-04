@@ -23,7 +23,7 @@ function TableRow({ product }) {
             };
 
             const resp = await axios.post(
-                process.env.REACT_APP_BACKEND_URL + "api/product/remove/selllist", Data, config
+                "https://tradehub-backend.onrender.com/api/product/remove/selllist", Data, config
             );
 
             window.alert(resp.data.message);

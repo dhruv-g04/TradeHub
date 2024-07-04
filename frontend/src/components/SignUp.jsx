@@ -29,7 +29,7 @@ function Signup() {
                 withCredentials: true,
             };
             const { data } = await axios.post(
-                "http://localhost:4000/api/signup",
+                "https://tradehub-backend.onrender.com/api/signup",
                 signupText,
                 config
             );

@@ -48,7 +48,7 @@ function Sell() {
 
     const callAboutUser = async () => {
         try {
-            const res = await fetch(process.env.REACT_APP_BACKEND_URL + "api/aboutuser", {
+            const res = await fetch("https://tradehub-backend.onrender.com/api/aboutuser", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -89,7 +89,7 @@ function Sell() {
             };
 
             await axios.post(
-                process.env.REACT_APP_BACKEND_URL + "api/product/selllist", Data, config
+                "https://tradehub-backend.onrender.com/api/product/selllist", Data, config
             );
 
             // window.alert("Product has been added to sell list");
@@ -104,7 +104,7 @@ function Sell() {
         event.preventDefault();
         callAboutUser();
         try {
-            const response = await axios.post(process.env.REACT_APP_BACKEND_URL + 'api/product/sell', data, {
+            const response = await axios.post('https://tradehub-backend.onrender.com/api/product/sell', data, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'multipart/form-data',

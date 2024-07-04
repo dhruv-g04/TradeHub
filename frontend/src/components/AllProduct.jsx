@@ -7,7 +7,7 @@ import Footer from "./Footer";
 function AllProduct() {
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        axios.get(process.env.REACT_APP_BACKEND_URL + "api/products")
+        axios.get("https://tradehub-backend.onrender.com/api/products")
             .then((response) => {
                 setProducts(response.data);
             }).catch((error) => {

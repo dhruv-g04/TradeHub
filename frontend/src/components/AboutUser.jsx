@@ -15,7 +15,7 @@ function CustomerDetails() {
     });
     const callAboutUser = async () => {
         try {
-            const res = await fetch(process.env.REACT_APP_BACKEND_URL + "api/aboutuser", {
+            const res = await fetch("https://tradehub-backend.onrender.com/api/aboutuser", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

@@ -8,7 +8,7 @@ function Heading() {
     const callAboutUser = async () => {
         // event.preventDefault();
         try {
-            const res = await fetch(process.env.REACT_APP_BACKEND_URL + "api/aboutuser", {
+            const res = await fetch("https://tradehub-backend.onrender.com/api/aboutuser", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -33,7 +33,7 @@ function Heading() {
             const config = {
                 withCredentials: true, // Include credentials (cookies) in the request
               };
-          await axios.get(process.env.REACT_APP_BACKEND_URL + "api/logout", config);
+          await axios.get("https://tradehub-backend.onrender.com/api/logout", config);
           localStorage.removeItem("userInfo");
           window.alert("Logout Successfully");
           setShow(false);

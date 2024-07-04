@@ -9,7 +9,7 @@ import Feature from "./Feature";
 function Home() {  
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        axios.get(process.env.REACT_APP_BACKEND_URL + "api/recentproducts")
+        axios.get("https://tradehub-backend.onrender.com/api/recentproducts")
             .then((response) => {
                 setProducts(response.data);
             }).catch((error) => {
