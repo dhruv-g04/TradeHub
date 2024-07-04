@@ -2,66 +2,70 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const generateToken = require("../utils/generateToken");
-//Register
+
+// Register a new user
 const addUser = asyncHandler(async (req, res) => {
-    let { name, username, password } = req.body;
-    //check if the username already exists
-    const userExists = await User.findOne({ username });
-    if (userExists) {
-        return res.status(409).json({
-            message: "User Already Exists"
-        });
-    }
-    //create a new user
-    password = await bcrypt.hash(password, 10);
-    const user = await User.create({
-        name, username, password
-    });
-    if (user) {
+    try {
+        const { name, username, password } = req.body;
+
+        // Check if the username already exists
+        const userExists = await User.findOne({ username });
+        if (userExists) {
+            return res.status(409).json({ message: "User Already Exists" });
+        }
+
+        // Create a new user
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.create({ name, username, password: hashedPassword });
+
+        // Generate token
         const token = generateToken(user._id);
+
+        // Set cookie and send response
         res.cookie("jwtoken", token, {
-            expires: new Date(Date.now() + 25892000000),
-            path: '/', 
+            expires: new Date(Date.now() + 25892000000), // 1 year
+            httpOnly: true,
         }).json({
             _id: user._id,
             name: user.name,
             username: user.username,
-            wishList: user.wishList,
-            sellList: user.sellList,
             message: "Registration successful",
             token: token,
         });
-    } else {
-        res.status(500).json({
-            message: "Error Occurred",
-        });
+    } catch (error) {
+        console.error("Error during registration:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
-// Login
+// Login user
 const authUser = asyncHandler(async (req, res) => {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username: username });
+    try {
+        const { username, password } = req.body;
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+        // Find user
+        const user = await User.findOne({ username });
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(401).json({ error: "Invalid Username or Password" });
+        }
+
+        // Generate token
         const token = generateToken(user._id);
+
+        // Set cookie and send response
         res.cookie("jwtoken", token, {
-            expires: new Date(Date.now() + 25892000000),
-            path: '/'
+            expires: new Date(Date.now() + 25892000000), // 1 year
+            httpOnly: true,
         }).json({
             _id: user._id,
             name: user.name,
             username: user.username,
-            wishList: user.wishList,
-            sellList: user.sellList,
             token: token,
         });
-    } else {
-        return res.status(401).json({
-            error: "Invalid Username or Password",
-        });
+    } catch (error) {
+        console.error("Error during login:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
-
 
 module.exports = { addUser, authUser };

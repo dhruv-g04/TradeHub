@@ -319,6 +319,24 @@ body {
 }
 
 /* Sign Up  Login*/
+.arrow {
+  position: relative;
+  top: 0.15rem;
+}
+.home-btn {
+  position: relative;
+  top: 1rem;
+  transition: 0.2s ease;
+  text-decoration: none; 
+  color: teal;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 20px;
+}
+.home-btn:hover {
+  margin-left:30px ;
+  color:rgb(4, 180, 180);
+}
 .container {
   width: 70%;
   margin: 5rem 12.5rem;

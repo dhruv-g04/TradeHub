@@ -1,6 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+
 function Login() {
     const navigate = useNavigate();
     const [loginText, setLoginText] = React.useState({
@@ -52,6 +54,9 @@ function Login() {
     };
     return (
         <div>
+            <div>
+                <Link to={`/`} className='home-btn'> <span className='arrow'><IoArrowBackCircleOutline /></span> Home</Link>
+            </div>
             <div className="container">
                 <img src="/images/login4.png" alt="No img available" />
                 <div className="sub-container">

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+
 function Signup() {
     const navigate = useNavigate();
     const [signupText, setSignupText] = useState({
@@ -8,15 +10,15 @@ function Signup() {
         username: "",
         password: ""
     });
+
     function handleChange(event) {
         const { name, value } = event.target;
-        setSignupText((prevvalue) => {
-            return {
-                ...prevvalue,
-                [name]: value
-            };
-        });
+        setSignupText(prevValue => ({
+            ...prevValue,
+            [name]: value
+        }));
     }
+
     const register = async (event) => {
         event.preventDefault();
         try {
@@ -27,9 +29,10 @@ function Signup() {
                 withCredentials: true,
             };
             const { data } = await axios.post(
-                "http://localhost:4000/api/signup", signupText, config
+                "http://localhost:4000/api/signup",
+                signupText,
+                config
             );
-            // console.log(data);
             window.alert(data.message);
             if (data.message === "Registration successful") {
                 localStorage.setItem("userInfo", JSON.stringify(data));
@@ -38,30 +41,29 @@ function Signup() {
         } catch (error) {
             if (error.response) {
                 const statusCode = error.response.status;
-                // console.log("Error status code:", statusCode);
                 if (statusCode === 409) {
                     window.alert("User already exists.");
-                } else{
+                } else {
                     window.alert("Some Error message");
                     console.log("Error message:", error);
-                } 
+                }
             } else {
                 window.alert("Error Occurred");
                 console.log("Error message:", error);
             }
-            
         }
-        
     };
+
     return (
         <div>
+            <div>
+                <Link to={`/`} className='home-btn'> <span className='arrow'><IoArrowBackCircleOutline /></span> Home</Link>
+            </div>
             <div className="container">
                 <img src="/images/login.jpg" alt="Sign Up" />
                 <div className="sub-container">
-                    <h2>
-                        Sign Up
-                    </h2>
-                    <form >
+                    <h2>Sign Up</h2>
+                    <form onSubmit={register}>
                         <input
                             onChange={handleChange}
                             name="name"
@@ -83,13 +85,13 @@ function Signup() {
                             value={signupText.password}
                             placeholder="Password"
                         />
-                        <button type="submit" onClick={register} className="normal">Sign Up</button>
+                        <button type="submit" className="normal">Sign Up</button>
                         <p>Already a member? <a href="/login">Login</a></p>
                     </form>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Signup;

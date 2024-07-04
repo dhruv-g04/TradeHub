@@ -1,42 +1,41 @@
 const express = require("express");
 const app = express();
-const router = express.Router();
-const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const cors = require("cors");
-const userRoutes = require("./routes/userroutes");
 const cookieParser = require('cookie-parser');
-const Product = require("./models/product");
-
 const dotenv = require('dotenv');
+const userRoutes = require("./routes/userroutes");
+
 dotenv.config();
 
+// Middleware setup
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
-  }));
-  
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(cookieParser());
+}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
+// MongoDB connection setup
 const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/TradeHub';
 
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-
-});
-mongoose.connection.on("connected", () => {
+})
+.then(() => {
     console.log("Mongoose is connected");
-});
-mongoose.connection.on("error", (err) => {
+})
+.catch((err) => {
     console.error("Error connecting to MongoDB:", err);
 });
 
+// Routes setup
 app.use('/api', userRoutes);
 
-app.listen(4000, function () {
-    console.log("Server started on port 4000");
+// Server startup
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
 });
