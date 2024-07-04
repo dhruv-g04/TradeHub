@@ -28,7 +28,7 @@ const addUser = asyncHandler(async (req, res) => {
         res.cookie("jwtoken", token, {
             httpOnly: true,
             expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year
-            secure: process.env.NODE_ENV === "production", // Ensures cookie is sent only over HTTPS in production
+            // secure: process.env.NODE_ENV === "production", // Ensures cookie is sent only over HTTPS in production
         }).json({
             _id: user._id,
             name: user.name,
@@ -60,7 +60,7 @@ const authUser = asyncHandler(async (req, res) => {
         res.cookie("jwtoken", token, {
             httpOnly: true,
             expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000), // 1 year
-            secure: process.env.NODE_ENV === "production", // Ensures cookie is sent only over HTTPS in production
+            // secure: process.env.NODE_ENV === "production", // Ensures cookie is sent only over HTTPS in production
         }).json({
             _id: user._id,
             name: user.name,
