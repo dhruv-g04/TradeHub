@@ -24,7 +24,7 @@ function Feature() {
                 <h6>User Friendly</h6>
             </div>
             <div className="fe-box">
-                <img src="/images/easy_to_connect.jpg" alt="feature"/>
+                <img src="/images/Easy_to_connect.jpg" alt="feature"/>
                 <h6>Easy To Connect</h6>
             </div>
         </section>

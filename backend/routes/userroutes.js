@@ -9,7 +9,7 @@ const Product = require("../models/product");
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, "../my-app/public/uploads"),
+    destination: path.join(__dirname, "../frontend/public/uploads"),
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '_' + Math.round(Math.random() * 1e9);
         cb(null, file.fieldname + '_' + uniqueSuffix + path.extname(file.originalname));
