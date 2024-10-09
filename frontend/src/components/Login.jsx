@@ -30,7 +30,7 @@ function Login() {
                 withCredentials: true,
             };
             const { data } = await axios.post(
-                "https://tradehub-backend.onrender.com/api/login",
+                `${process.env.REACT_APP_BACKEND_URL}/api/login`,
                 loginText,
                 config
             );

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Header from "./Header";
 import Footer from "./Footer";
 // import Grid from "./Grid";
 import SellTable from "./SellListTable";
+
 function CustomerDetails() {
     const navigate = useNavigate();
     const [user, setUser] = useState({
@@ -15,7 +16,7 @@ function CustomerDetails() {
     });
     const callAboutUser = async () => {
         try {
-            const res = await fetch("https://tradehub-backend.onrender.com/api/aboutuser", {
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/aboutuser`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"

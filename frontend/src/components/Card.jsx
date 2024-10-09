@@ -37,7 +37,7 @@ function Card({ product }) {
                     }
                 };
                 const resp = await axios.post(
-                    `https://tradehub-backend.onrender.com/api/product/cart`, Data, config
+                    `${process.env.REACT_APP_BACKEND_URL} /api/product/cart`, Data, config
                 );
                 window.alert(resp.data.message);
             } catch (error) {

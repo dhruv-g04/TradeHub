@@ -18,7 +18,7 @@ function ProductDetail() {
         const fetchData = async () => {
             try {
                 console.log("productIdFrontend:", productId);
-                const res = await axios.get(`https://tradehub-backend.onrender.com/api/product/products_by_id?id=${productId}`);
+                const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/product/products_by_id?id=${productId}`);
                 if (res.status === 200) {
                     setProductData(res.data.data); // Assuming res.data.data is the correct structure
                 } else {
@@ -28,10 +28,10 @@ function ProductDetail() {
                 console.error("Error fetching product data:", err);
             }
         };
-    
+
         fetchData();
     }, [productId]);
-    
+
 
     const submitProduct = async (event) => {
         event.preventDefault();
@@ -43,7 +43,7 @@ function ProductDetail() {
             const { _id: userID, token } = user;
             setUserID(userID);
             setToken(token);
-            
+
             const data = {
                 userID,
                 item: productData
@@ -57,7 +57,7 @@ function ProductDetail() {
                     }
                 };
 
-                const resp = await axios.post(`https://tradehub-backend.onrender.com/api/product/cart`, data, config);
+                const resp = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/product/cart`, data, config);
                 window.alert(resp.data.message);
             } catch (error) {
                 console.error("Error adding to cart:", error);

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import axios from 'axios';
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsBagHeart, BsPerson } from "react-icons/bs";
 function Heading() {
     const [show, setShow] = React.useState(false);
@@ -8,7 +8,7 @@ function Heading() {
     const callAboutUser = async () => {
         // event.preventDefault();
         try {
-            const res = await fetch("https://tradehub-backend.onrender.com/api/aboutuser", {
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/aboutuser`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -16,7 +16,7 @@ function Heading() {
                 credentials: "include",
             });
             const data = await res.json();
-            if(data)
+            if (data)
                 setShow(true);
 
             if (!res.status === 200) {
@@ -32,17 +32,17 @@ function Heading() {
         try {
             const config = {
                 withCredentials: true, // Include credentials (cookies) in the request
-              };
-          await axios.get("https://tradehub-backend.onrender.com/api/logout", config);
-          localStorage.removeItem("userInfo");
-          window.alert("Logout Successfully");
-          setShow(false);
-          navigate("/login");
+            };
+            await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/logout`, config);
+            localStorage.removeItem("userInfo");
+            window.alert("Logout Successfully");
+            setShow(false);
+            navigate("/login");
         } catch (error) {
-          window.alert("Error Occurred");
-          console.log("Error message:", error);
+            window.alert("Error Occurred");
+            console.log("Error message:", error);
         }
-      };
+    };
 
     useEffect(() => {
         callAboutUser();
@@ -51,7 +51,7 @@ function Heading() {
     return (
         <section id="header">
             {/* <a id="logo" href="/"><h3><img src="images\T logo.png"/> radeHub</h3></a> */}
-            <a id="logo" href="/"><h3><img src="/images/TradeHub logo.png"/></h3></a>
+            <a id="logo" href="/"><h3><img src="/images/TradeHub logo.png" /></h3></a>
             <div>
                 <ul id="navbar">
 
@@ -61,7 +61,7 @@ function Heading() {
                     {show ? <>
                         <li onClick={logout}>
                             <Link>
-                            Logout
+                                Logout
                             </Link>
                         </li>
                     </> : <>

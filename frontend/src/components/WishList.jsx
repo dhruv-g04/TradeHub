@@ -14,7 +14,7 @@ function WishList() {
     });
     const callAboutUser = async () => {
         try {
-            const res = await fetch("https://tradehub-backend.onrender.com/api/aboutuser", {
+            const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/aboutuser`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -44,7 +44,7 @@ function WishList() {
     return (
         <div>
             <Header />
-            <Table heading="WishList" list={user.wishList}/>
+            <Table heading="WishList" list={user.wishList} />
             <Footer />
         </div>
     )

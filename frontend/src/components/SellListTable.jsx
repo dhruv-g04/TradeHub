@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate ,Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { MdOutlineCancel } from "react-icons/md";
 import { LuIndianRupee } from "react-icons/lu";
 import { BsTelephoneFill } from "react-icons/bs";
@@ -23,7 +23,7 @@ function TableRow({ product }) {
             };
 
             const resp = await axios.post(
-                "https://tradehub-backend.onrender.com/api/product/remove/selllist", Data, config
+                `${process.env.REACT_APP_BACKEND_URL}/api/product/remove/selllist`, Data, config
             );
 
             window.alert(resp.data.message);
@@ -69,7 +69,7 @@ function Table(props) {
             </div>
             {proList.length === 0 ?
                 <div className="section-p1 center">
-                    <img  alt="..." src={process.env.PUBLIC_URL + '/images/empty_wishList.png'} />
+                    <img alt="..." src={process.env.PUBLIC_URL + '/images/empty_wishList.png'} />
                     <br />
                     <strong>There is nothing in your sell list</strong>
                     <p></p>
