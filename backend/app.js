@@ -11,7 +11,7 @@ dotenv.config();
 // CORS configuration
 const allowedOrigins = [
     'http://localhost:3000', // Allow local development
-    'https://tradehub-nine.vercel.app/', // Allow your deployed frontend
+    'https://tradehub-nine.vercel.app', // Allow your deployed frontend
 ];
 
 // CORS options
