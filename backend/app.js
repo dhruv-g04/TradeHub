@@ -7,13 +7,27 @@ const dotenv = require('dotenv');
 const userRoutes = require("./routes/userroutes");
 
 dotenv.config();
-
 // Middleware setup
+// CORS configuration
+const allowedOrigins = [
+    'http://localhost:3000', // Allow local development
+    'https://tradehub-nine.vercel.app/', // Allow your deployed frontend
+];
+
+// CORS options
+const corsOptions = {
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'], // Allowed methods
+    credentials: true, // Allow cookies to be sent with requests
+};
+
+app.use(cors(corsOptions)); // Use CORS with specified options
+
 // app.use(cors({
 //     origin: 'http://localhost:3000',
 //     credentials: true
 // }));
-app.use(cors());
+// app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
