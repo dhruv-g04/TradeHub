@@ -19,7 +19,7 @@ function Footer() {
                 <div className="section-p1 follow">
                     <h4>Follow Us</h4>
                     <div className="icon">
-                        <a href="https://github.com/dhruv-g04/TradeHub-frontend"><BsGlobe /></a>
+                        <a href="https://tradehub-nine.vercel.app/"><BsGlobe /></a>
                         <a href="https://www.youtube.com/"><AiOutlineYoutube /></a>
                         <a href="https://www.instagram.com/"><BsInstagram /></a>
                         <a href="https://www.facebook.com/"><BsFacebook /></a>

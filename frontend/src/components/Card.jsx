@@ -37,19 +37,39 @@ function Card({ product }) {
                     }
                 };
                 const resp = await axios.post(
-                    `${process.env.REACT_APP_BACKEND_URL} /api/product/cart`, Data, config
+                    `${process.env.REACT_APP_BACKEND_URL}/api/product/cart`, // Removed extra space
+                    Data,
+                    config
                 );
-                window.alert(resp.data.message);
+
+                // Check if resp and resp.data are defined
+                if (resp && resp.data) {
+                    window.alert(resp.data.message);
+                } else {
+                    console.error("Unexpected response structure:", resp);
+                }
             } catch (error) {
+                // Improved error handling
+                if (error.response && error.response.data) {
+                    console.error("Error response data:", error.response.data);
+                    window.alert(error.response.data.message || "An error occurred");
+                } else {
+                    console.error("Error:", error);
+                    window.alert("An unexpected error occurred");
+                }
                 navigate("/login");
-                console.log(error.response.data);
             }
         }
     };
 
     return (
         <div className="card">
-            <img className="open-card" onClick={navigateToProduct} src={process.env.PUBLIC_URL + `/uploads/${product.imageFilePath ? product.imageFilePath : "no-img.png"}`} alt="" />
+            <img
+                className="open-card"
+                onClick={navigateToProduct}
+                src={process.env.PUBLIC_URL + `/uploads/${product.imageFilePath ? product.imageFilePath : "no-img.png"}`}
+                alt=""
+            />
             <div className="open-card des" onClick={navigateToProduct}>
                 <span>{product.category}</span>
                 <h5>{product.model}</h5>

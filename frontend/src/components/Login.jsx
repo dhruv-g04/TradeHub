@@ -12,16 +12,18 @@ function Login() {
 
     function handleChange(event) {
         const { name, value } = event.target;
-        setLoginText((prevvalue) => {
-            return {
-                ...prevvalue,
-                [name]: value
-            };
-        });
+        setLoginText((prevValue) => ({
+            ...prevValue,
+            [name]: value
+        }));
     }
-    // \\\\\\\\\\\\\\\\\/
+
     const clickLogin = async (event) => {
         event.preventDefault();
+        if (!loginText.username || !loginText.password) {
+            return alert("Please fill in all fields."); // Basic validation
+        }
+
         try {
             const config = {
                 headers: {
@@ -34,42 +36,43 @@ function Login() {
                 loginText,
                 config
             );
+
             if (data.error) {
-                window.alert(data.error);
-            } else {
-                localStorage.setItem("userInfo", JSON.stringify(data));
-                window.alert("Login successful");
-                navigate("/");
+                return alert(data.error);
             }
+
+            localStorage.setItem("userInfo", JSON.stringify(data));
+            alert("Login successful");
+            navigate("/");
         } catch (error) {
-            const statusCode = error.response.status;
-            if (statusCode === 401) {
-                window.alert("Invalid Username or Password");
-            }
-            else {
-                alert("Error occurred");
+            if (error.response && error.response.status === 401) {
+                alert("Invalid Username or Password");
+            } else {
+                alert("An error occurred. Please try again.");
                 console.log(error);
             }
         }
     };
+
     return (
         <div>
             <div>
-                <Link to={`/`} className='home-btn'> <span className='arrow'><IoArrowBackCircleOutline /></span> Home</Link>
+                <Link to={`/`} className='home-btn'>
+                    <span className='arrow'><IoArrowBackCircleOutline /></span> Home
+                </Link>
             </div>
             <div className="container">
-                <img src="/images/login4.png" alt="No img available" />
+                <img src="/images/login4.png" alt="Login" />
                 <div className="sub-container">
-                    <h2>
-                        Login
-                    </h2>
-                    <form >
+                    <h2>Login</h2>
+                    <form onSubmit={clickLogin}>
                         <input
                             onChange={handleChange}
                             name="username"
                             type="text"
                             value={loginText.username}
                             placeholder="User Name"
+                            required
                         />
                         <input
                             onChange={handleChange}
@@ -77,14 +80,15 @@ function Login() {
                             type="password"
                             value={loginText.password}
                             placeholder="Password"
+                            required
                         />
-                        <button onClick={clickLogin} className="normal">Login</button>
+                        <button type="submit" className="normal">Login</button>
                     </form>
-                    <p>Not a member? <a href="/signup">Sign Up</a> Now</p>
+                    <p>Not a member? <Link to="/signup">Sign Up</Link> Now</p>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Login;

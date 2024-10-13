@@ -21,6 +21,10 @@ function Signup() {
 
     const register = async (event) => {
         event.preventDefault();
+        if (!signupText.name || !signupText.username || !signupText.password) {
+            return alert("Please fill in all fields."); // Basic validation
+        }
+
         try {
             const config = {
                 headers: {
@@ -33,7 +37,8 @@ function Signup() {
                 signupText,
                 config
             );
-            window.alert(data.message);
+
+            alert(data.message);
             if (data.message === "Registration successful") {
                 localStorage.setItem("userInfo", JSON.stringify(data));
                 navigate("/");
@@ -42,13 +47,13 @@ function Signup() {
             if (error.response) {
                 const statusCode = error.response.status;
                 if (statusCode === 409) {
-                    window.alert("User already exists.");
+                    alert("User already exists.");
                 } else {
-                    window.alert("Some Error message");
+                    alert("An error occurred. Please try again.");
                     console.log("Error message:", error);
                 }
             } else {
-                window.alert("Error Occurred");
+                alert("Error occurred. Please try again.");
                 console.log("Error message:", error);
             }
         }
@@ -57,7 +62,9 @@ function Signup() {
     return (
         <div>
             <div>
-                <Link to={`/`} className='home-btn'> <span className='arrow'><IoArrowBackCircleOutline /></span> Home</Link>
+                <Link to={`/`} className='home-btn'>
+                    <span className='arrow'><IoArrowBackCircleOutline /></span> Home
+                </Link>
             </div>
             <div className="container">
                 <img src="/images/login.jpg" alt="Sign Up" />
@@ -70,6 +77,7 @@ function Signup() {
                             type="text"
                             value={signupText.name}
                             placeholder="Full Name"
+                            required
                         />
                         <input
                             onChange={handleChange}
@@ -77,6 +85,7 @@ function Signup() {
                             type="text"
                             value={signupText.username}
                             placeholder="User Name"
+                            required
                         />
                         <input
                             onChange={handleChange}
@@ -84,9 +93,10 @@ function Signup() {
                             type="password"
                             value={signupText.password}
                             placeholder="Password"
+                            required
                         />
                         <button type="submit" className="normal">Sign Up</button>
-                        <p>Already a member? <a href="/login">Login</a></p>
+                        <p>Already a member? <Link to="/login">Login</Link></p>
                     </form>
                 </div>
             </div>

@@ -47,10 +47,10 @@ function CustomerDetails() {
         (<div id="box">
             < Header />
             <section className="section-p1">
-                <div class="info-box">
+                <div className="info-box">
                     <h2 className="info-heading">Personal Information</h2>
 
-                    <div class="text-start personalInfo">
+                    <div className="text-start personalInfo">
                         <h4> <strong>Name: </strong> {user.name} </h4>
                         <h4> <strong>User Name: </strong>  {user.username}</h4>
 
