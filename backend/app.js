@@ -5,6 +5,7 @@ const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const userRoutes = require("./routes/userroutes");
+const cloudinary = require("./cloudinary/cloudinary")
 
 dotenv.config();
 // Middleware setup
