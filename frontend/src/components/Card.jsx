@@ -67,7 +67,8 @@ function Card({ product }) {
             <img
                 className="open-card"
                 onClick={navigateToProduct}
-                src={process.env.PUBLIC_URL + `/uploads/${product.imageFilePath ? product.imageFilePath : "no-img.png"}`}
+                // src={process.env.PUBLIC_URL + `/uploads/${product.imageFilePath ? product.imageFilePath : "no-img.png"}`}
+                src={process.env.PUBLIC_URL + `/upload/${product.imageFilePath ? product.imageFilePath : "no-img.png"}`} // removed s from uploads
                 alt=""
             />
             <div className="open-card des" onClick={navigateToProduct}>

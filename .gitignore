@@ -6,6 +6,7 @@ frontend/.env
 /node_modules
 /.pnp
 .pnp.js
+# uploads/
 # testing
 /coverage
 

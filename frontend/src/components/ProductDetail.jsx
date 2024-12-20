@@ -74,7 +74,8 @@ function ProductDetail() {
             <Header />
             <div id="prodetails" className="section-p1">
                 <div className="single-pro-img">
-                    <img src={process.env.PUBLIC_URL + `/uploads/${productData.imageFilePath ? productData.imageFilePath : "no-img.png"}`} id="main-img" alt="Product" />
+                    {/* <img src={process.env.PUBLIC_URL + `/uploads/${productData.imageFilePath ? productData.imageFilePath : "no-img.png"}`} id="main-img" alt="Product" />  */}
+                    <img src={process.env.PUBLIC_URL + `/upload/${productData.imageFilePath ? productData.imageFilePath : "no-img.png"}`} id="main-img" alt="Product" /> // removed s from uploads
                 </div>
                 <div className="single-pro-details">
                     <div className="name">
